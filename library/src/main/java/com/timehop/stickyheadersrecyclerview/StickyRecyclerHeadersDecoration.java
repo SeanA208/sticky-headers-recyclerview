@@ -155,7 +155,7 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
     View header = mHeaderViews.get(headerId);
     if (header == null) {
       //TODO - recycle views
-      RecyclerView.ViewHolder viewHolder = mAdapter.onCreateHeaderViewHolder(parent);
+      RecyclerView.ViewHolder viewHolder = mAdapter.onCreateHeaderViewHolder(parent, position);
       mAdapter.onBindHeaderViewHolder(viewHolder, position);
       header = viewHolder.itemView;
       if (header.getLayoutParams() == null) {
