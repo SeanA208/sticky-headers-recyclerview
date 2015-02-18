@@ -45,7 +45,6 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
             } else {
                 outRect.left = header.getWidth();
             }
-<<<<<<< HEAD
         }
     }
 
