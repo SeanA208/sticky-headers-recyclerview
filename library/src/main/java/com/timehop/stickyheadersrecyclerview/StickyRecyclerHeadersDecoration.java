@@ -70,21 +70,21 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
                     if (topOffset == 0) {
                         // The view is directly below the header but not under
                         // make sure the header knows it's in inline mode
-                        setHeaderIsInline(firstHeaderId, firstPosition);
+                        setHeaderStateAndNotify(firstHeaderId, firstPosition, State.Inline);
                     } else if (topOffset < 0) {
                         // < 0  implies the view is being tucked under the header
                         // make sure the header knows it's in stacked mode
-                        setHeaderIsStacked(firstHeaderId, firstPosition);
+                        setHeaderStateAndNotify(firstHeaderId, firstPosition, State.Stacked);
                     }
-                } else if (orientation == LinearLayoutManager.HORIZONTAL && leftOffset < 0) {
+                } else if (orientation == LinearLayoutManager.HORIZONTAL) {
                     if (leftOffset == 0) {
                         // The view is directly below the header but not under
                         // make sure the header knows it's in inline mode
-                        setHeaderIsInline(firstHeaderId, firstPosition);
+                        setHeaderStateAndNotify(firstHeaderId, firstPosition, State.Inline);
                     } else if (leftOffset < 0) {
                         // < 0  implies the view is being tucked under the header
                         // make sure the header knows it's in stacked mode
-                        setHeaderIsStacked(firstHeaderId, firstPosition);
+                        setHeaderStateAndNotify(firstHeaderId, firstPosition, State.Stacked);
                     }
                 }
 
@@ -100,15 +100,15 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
                             nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight() < 0) {
                             translationY += nextView.getTop() - secondHeader.getHeight() - firstHeader.getHeight();
                             //Set both headers to inline mode while one is pushing off the other as no views are under them
-                            setHeaderIsInline(firstHeaderId, firstPosition);
-                            setHeaderIsInline(secondHeaderId, nextPosition);
+                            setHeaderStateAndNotify(firstHeaderId, firstPosition, State.Inline);
+                            setHeaderStateAndNotify(secondHeaderId, nextPosition, State.Inline);
 
                     } else if (orientation == LinearLayoutManager.HORIZONTAL &&
                             nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth() < 0) {
                             translationX += nextView.getLeft() - secondHeader.getWidth() - firstHeader.getWidth();
                             //Set both headers to inline mode while one is pushing off the other as no views are under them
-                            setHeaderIsInline(firstHeaderId, firstPosition);
-                            setHeaderIsInline(secondHeaderId, nextPosition);
+                            setHeaderStateAndNotify(firstHeaderId, firstPosition, State.Inline);
+                            setHeaderStateAndNotify(secondHeaderId, nextPosition, State.Inline);
                     }
                 }
                 canvas.save();
@@ -140,14 +140,6 @@ public class StickyRecyclerHeadersDecoration extends RecyclerView.ItemDecoration
                 }
             }
         }
-    }
-
-    private void setHeaderIsInline(long headerId, int position) {
-        setHeaderStateAndNotify(headerId, position, State.Inline);
-    }
-
-    private void setHeaderIsStacked(long headerId, int position) {
-        setHeaderStateAndNotify(headerId, position, State.Stacked);
     }
 
     private void setHeaderStateAndNotify(long headerId, int position, State state) {
